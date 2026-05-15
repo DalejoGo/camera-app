@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Mi Cámara App</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="camera-container">
+    <ion-button expand="block" (click)="tomarFoto()">
+      <ion-icon name="camera" slot="start"></ion-icon>
+      Tomar Foto
+    </ion-button>
+
+    <ion-card *ngIf="foto">
+      <img [src]="foto" />
+      <ion-card-content>
+        Imagen capturada con éxito.
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

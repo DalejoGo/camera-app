@@ -1,0 +1,11 @@
+.camera-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  img {
+    margin-top: 20px;
+    border-radius: 10px;
+    max-width: 100%;
+  }
+}
