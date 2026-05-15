@@ -1,21 +1,60 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="primary">
-    <ion-title>Mi Cámara App</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar class="snap-toolbar">
+    <div class="snap-header">
+      <div class="snap-brand">
+        <div class="snap-icon">
+          <ion-icon name="aperture-outline"></ion-icon>
+        </div>
+        <span class="snap-name">SnapDeck</span>
+      </div>
+      <span class="snap-count" *ngIf="photos.length > 0">
+        {{ photos.length }} foto{{ photos.length > 1 ? 's' : '' }}
+      </span>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
-  <div class="camera-container">
-    <ion-button expand="block" (click)="tomarFoto()">
-      <ion-icon name="camera" slot="start"></ion-icon>
-      Tomar Foto
-    </ion-button>
+<ion-content [fullscreen]="true" class="snap-bg">
 
-    <ion-card *ngIf="foto">
-      <img [src]="foto" />
-      <ion-card-content>
-        Imagen capturada con éxito.
-      </ion-card-content>
-    </ion-card>
+  <!-- Zona de captura -->
+  <div class="capture-zone">
+    <button class="btn-capture" [class.capturing]="capturing" (click)="takePhoto()">
+      <div class="btn-ring">
+        <div class="btn-core">
+          <ion-icon name="camera-outline"></ion-icon>
+        </div>
+      </div>
+    </button>
+
+    <button class="btn-flip" (click)="toggleCamera()">
+      <ion-icon name="camera-reverse-outline"></ion-icon>
+      <span>{{ isRearCamera ? 'Trasera' : 'Frontal' }}</span>
+    </button>
   </div>
+
+  <!-- Galeria -->
+  <div class="gallery-section">
+
+    <div class="gallery-label" *ngIf="photos.length > 0">
+      <span>Galeria</span>
+      <div class="label-line"></div>
+    </div>
+
+    <div class="empty-gallery" *ngIf="photos.length === 0">
+      <ion-icon name="images-outline"></ion-icon>
+      <p>Las fotos que captures apareceran aqui</p>
+    </div>
+
+    <div class="photo-grid" *ngIf="photos.length > 0">
+      <div class="photo-card" *ngFor="let photo of photos" (click)="openMenu(photo)">
+        <img [src]="photo.dataUrl" alt="foto" />
+        <div class="photo-overlay">
+          <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
+        </div>
+        <span class="photo-date">{{ formatDate(photo.timestamp) }}</span>
+      </div>
+    </div>
+
+  </div>
+
 </ion-content>
